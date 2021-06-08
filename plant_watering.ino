@@ -13,7 +13,7 @@ void setup() {
   _pumpState = LOW;
   _previousMillis = 0;
 
-  _onTime = _offTime = 2000;
+  _onTime = _offTime = 5000;
   //_offTime = 2000;
 
   Serial.begin(BAUD_DEFAULT);
