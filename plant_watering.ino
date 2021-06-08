@@ -3,18 +3,18 @@
 
 WaterPump pump;
 
-int _ledState;             		// ledState used to set the LED
-unsigned long _previousMillis;  	// will store last time LED was updated
+int _pumpState;
+unsigned long _previousMillis;
 
 long _onTime;     // milliseconds of on-time
 long _offTime;    // milliseconds of off-time
 
 void setup() {
-  _ledState = LOW;
+  _pumpState = LOW;
   _previousMillis = 0;
 
-  _onTime = 2000;
-  _offTime = 2000;
+  _onTime = _offTime = 2000;
+  //_offTime = 2000;
 
   Serial.begin(BAUD_DEFAULT);
 
@@ -27,18 +27,18 @@ void setup() {
 void loop() {
   unsigned long currentMillis = millis();
 
-  if ((_ledState == HIGH) && (currentMillis - _previousMillis >= _onTime))
+  if ((_pumpState == HIGH) && (currentMillis - _previousMillis >= _onTime))
   {
     Serial.println("PUMP OFF");
-    _ledState = LOW;  // Turn it off
-    _previousMillis = currentMillis;  // Remember the time
-    pump.Update(_ledState);  // Update the actual LED
+    _pumpState = LOW;  // Turn it off
+    _previousMillis = currentMillis;
+    pump.Update(_pumpState);
   }
-  else if ((_ledState == LOW) && (currentMillis - _previousMillis >= _offTime))
+  else if ((_pumpState == LOW) && (currentMillis - _previousMillis >= _offTime))
   {
     Serial.println("PUMP ON");
-    _ledState = HIGH;  // turn it on
-    _previousMillis = currentMillis;   // Remember the time
-    pump.Update(_ledState);	  // Update the actual LED
+    _pumpState = HIGH;  // turn it on
+    _previousMillis = currentMillis;
+    pump.Update(_pumpState);
   }
 }
